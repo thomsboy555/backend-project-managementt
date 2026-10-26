@@ -1,1 +1,41 @@
+// Paste ke https://dbdiagram.io lalu Export > PNG, simpan sebagai docs/erd.png
+Table departments {
+  id integer [pk, increment]
+  name varchar [not null]
+}
+
+Table users {
+  id integer [pk, increment]
+  department_id integer [ref: > departments.id]
+  name varchar [not null]
+  email varchar [not null, unique]
+}
+
+Table projects {
+  id integer [pk, increment]
+  owner_id integer [ref: > users.id]
+  title varchar [not null]
+  description text
+  status varchar
+}
+
+Table project_members {
+  project_id integer [pk, ref: > projects.id]
+  user_id integer [pk, ref: > users.id]
+}
+
+Table tasks {
+  id integer [pk, increment]
+  project_id integer [not null, ref: > projects.id]
+  assignee_id integer [ref: > users.id]
+  title varchar [not null]
+  status varchar
+}
+
+Table comments {
+  id integer [pk, increment]
+  task_id integer [not null, ref: > tasks.id]
+  user_id integer [ref: > users.id]
+  content text [not null]
+}
 
